@@ -5,7 +5,7 @@ var blogs = [
         description: "this is the blog 1",
         image: "https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg",
         imageAlt: "this is the image Alt1",
-        slug: "sluggssgsgs1"
+        slug: "blog1"
     },
     {
         title: "blog 2",
@@ -13,7 +13,7 @@ var blogs = [
         description: "this is the blog 2",
         image: "https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg",
         imageAlt: "this is the image Alt2",
-        slug: "sluggssgsgs2"
+        slug: "blog2"
     },
     {
         title: "blog 3",
@@ -21,7 +21,7 @@ var blogs = [
         description: "this is the blog 3",
         image: "https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg",
         imageAlt: "this is the image Alt3",
-        slug: "sluggssgsgs3"
+        slug: "blog3"
     }
 ];
 var blogContainer = document.getElementById('blog-container');
@@ -31,7 +31,10 @@ function displayBlogs() {
         blogElement.classList.add('blog');
         var title = document.createElement('h1');
         title.textContent = blog.title;
-        blogElement.appendChild(title);
+        var link = document.createElement('a');
+        link.href = "blogs/".concat(blog.slug, ".html");
+        link.appendChild(title);
+        blogElement.appendChild(link);
         var image = document.createElement('img');
         image.src = blog.image;
         image.alt = blog.imageAlt;

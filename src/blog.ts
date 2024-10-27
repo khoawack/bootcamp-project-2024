@@ -12,17 +12,25 @@ const blogs: Blog[] = [
         title: "blog 1",
         date: "today",
         description: "this is the blog 1",
-        image: "image1.png",
+        image: "https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg",
         imageAlt: "this is the image Alt1",
-        slug: "sluggssgsgs1"
+        slug: "blog1"
     },
     {
         title: "blog 2",
         date: "tomorrow",
         description: "this is the blog 2",
-        image: "image2.png",
+        image: "https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg",
         imageAlt: "this is the image Alt2",
-        slug: "sluggssgsgs2"
+        slug: "blog2"
+    },
+    {
+        title: "blog 3",
+        date: "tomorrow",
+        description: "this is the blog 3",
+        image: "https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg",
+        imageAlt: "this is the image Alt3",
+        slug: "blog3"
     }
 ];
 
@@ -35,7 +43,12 @@ function displayBlogs() {
 
         const title = document.createElement('h1');
         title.textContent = blog.title;
-        blogElement.appendChild(title);
+
+        const link = document.createElement('a');
+        link.href = `blogs/${blog.slug}.html`;
+
+        link.appendChild(title);
+        blogElement.appendChild(link);
 
         const image = document.createElement('img');
         image.src = blog.image;
