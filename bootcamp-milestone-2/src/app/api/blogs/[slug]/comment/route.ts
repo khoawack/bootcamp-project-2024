@@ -2,11 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import connectDB from "../../../../database/db";
 import Blog from "../../../../database/blogSchema";
 
-interface Context {
-  params: { slug: string };
-}
-
-export async function POST(req: NextRequest, { params }: Context) {
+export async function POST(
+  req: NextRequest,
+  { params }: { params: Record<string, string> } // Use Record<string, string> for dynamic params
+) {
   await connectDB();
 
   const { slug } = params;
