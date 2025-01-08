@@ -13,17 +13,17 @@
     "emailjs-com": "^3.2.0",
     "mongoose": "^8.9.3",
     "next": "^15.1.4",
-    "react": "19.0.0-rc-66855b96-20241106",
-    "react-dom": "19.0.0-rc-66855b96-20241106"
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "typescript": "^5"
-  }, 
+  },
   "engines": {
-  "node": "18.20.4",
-  "npm": "10.7.0"
-}
+    "node": "18.20.4",
+    "npm": "10.7.0"
+  }
 }
