@@ -2,8 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import connectDB from "../../../../database/db";
 import Blog from "../../../../database/blogSchema";
 
-export async function POST(req: NextRequest, { params }: { params: { slug: string } }) {
+export async function POST(req: NextRequest, context: { params: { slug: string } }) {
   await connectDB();
+
+  const { slug } = context.params;
 
   try {
     const body = await req.json();
@@ -14,7 +16,7 @@ export async function POST(req: NextRequest, { params }: { params: { slug: strin
     }
 
     const updatedBlog = await Blog.findOneAndUpdate(
-      { slug: params.slug },
+      { slug },
       { $push: { comments: { user, comment, date: new Date() } } },
       { new: true }
     );
