@@ -22,14 +22,16 @@ async function getBlog(slug: string): Promise<IBlog | null> {
   }
 }
 
-export default async function BlogPage({ params }: PageProps) {
-  const blog = await getBlog(params.slug);
+export default async function BlogPage({ params }: Awaited<PageProps>) {
+  const { slug } = params;
+
+  const blog = await getBlog(slug);
 
   if (!blog) {
     return (
       <div className={style.notFound}>
         <h1>Blog not found</h1>
-        <p>We couldn’t find a blog post with the slug "{params.slug}".</p>
+        <p>We couldn’t find a blog post with the slug "{slug}".</p>
       </div>
     );
   }
