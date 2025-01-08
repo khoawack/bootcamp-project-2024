@@ -22,9 +22,7 @@ async function getBlog(slug: string): Promise<IBlog | null> {
   }
 }
 
-export default async function BlogPage({ params }: PageProps) {
-  const { slug } = params;
-
+export default async function BlogPage({ params: { slug } }: PageProps) {
   const blog = await getBlog(slug);
 
   if (!blog) {
@@ -51,6 +49,7 @@ export default async function BlogPage({ params }: PageProps) {
 
       <div className={style.commentContainer}>
         <h2 className={style.commentTitle}>Comments</h2>
+
         {blog.comments.length === 0 ? (
           <p className={style.noComments}>No comments yet. Be the first to comment!</p>
         ) : (
