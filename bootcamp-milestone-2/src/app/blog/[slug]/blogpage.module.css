@@ -1,0 +1,137 @@
+/* Styles for the blog page */
+
+.blogContainer {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .blogTitle {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    color: #2c3e50;
+    text-align: center;
+  }
+  
+  .blogDate {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .blogImage {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 20px auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .blogContent {
+    font-size: 1.1rem;
+    color: #34495e;
+    text-align: justify;
+  }
+  
+  .notFound {
+    text-align: center;
+    color: #e74c3c;
+    margin-top: 50px;
+  }
+  
+  .notFound h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+  
+  .notFound p {
+    font-size: 1rem;
+    color: #7f8c8d;
+  }
+  
+
+/* Comment Section */
+.commentContainer {
+    margin-top: 40px;
+    padding: 20px;
+    border-top: 2px solid #e0e0e0;
+    background-color: #fafafa;
+    border-radius: 8px;
+  }
+  
+  .commentTitle {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    text-align: left;
+  }
+  
+  .noComments {
+    font-size: 1rem;
+    color: #7f8c8d;
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .commentList {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .comment {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .commentAuthor {
+    font-weight: bold;
+    color: #2c3e50;
+    font-size: 1.1rem;
+  }
+  
+  .commentDate {
+    font-size: 0.85rem;
+    color: #7f8c8d;
+  }
+  
+  .commentText {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.5;
+    margin-top: 10px;
+    text-align: justify;
+  }
+  
+  .commentInput {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .commentTextarea {
+    width: 100%;
+    min-height: 100px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    color: #333;
+  }
+  
