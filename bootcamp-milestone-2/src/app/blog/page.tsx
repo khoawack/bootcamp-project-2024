@@ -40,7 +40,7 @@ export default async function BlogPage({ params: { slug } }: PageProps) {
       <p className={style.blogDate}>{new Date(blog.date).toLocaleDateString()}</p>
       <img
         src={blog.image}
-        alt={blog.title}
+        alt={blog.image_alt || blog.title}
         className={style.blogImage}
       />
       <div className={style.blogContent}>
