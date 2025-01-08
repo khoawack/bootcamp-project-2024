@@ -1,44 +1,36 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema, Document } from 'mongoose';
 
-export interface IComment {
-	user: string;
-	comment: string;
-	date: Date;
+export interface IComment extends Document {
+  user: string;
+  comment: string;
+  date: Date;
 }
 
-// Comment schema
 const commentSchema = new Schema<IComment>({
-	user: { type: String, required: true },
-	comment: { type: String, required: true },
-	date: { type: Date, required: true},
-  });
+  user: { type: String, required: true },
+  comment: { type: String, required: true },
+  date: { type: Date, required: true },
+});
 
-// typescript type (can also be an interface)
-type Blog = {
-		title: string;
-	    slug: string; 
-		date: Date;
-		description: string; // for preview
-	    content: string; // text content for individual blog page
-	    image: string; // url for string in public
-	    image_alt: string; // alt for image
-		comments: Comment[]; // array for comments
-};
+export interface IBlog extends Document {
+  title: string;
+  slug: string;
+  date: Date;
+  description: string;
+  content: string;
+  image: string;
+  comments: IComment[];
+}
 
-// mongoose schema 
-const blogSchema = new Schema<Blog>({
-		title: { type: String, required: true },
-		slug: { type: String, required: true },
-		date: { type: Date, required: false, default: new Date()},
-		description: { type: String, required: true },
-		image: { type: String, required: true },
-	    image_alt: { type: String, required: true },
-		content: { type: String, required: true },
-		comments: { type: [commentSchema], default: [] },
-})
+const blogSchema = new Schema<IBlog>({
+  title: { type: String, required: true },
+  slug: { type: String, required: true },
+  date: { type: Date, required: true },
+  description: { type: String, required: true },
+  content: { type: String, required: true },
+  image: { type: String, required: true },
+  comments: { type: [commentSchema], required: true },
+});
 
-// defining the collection and model
-const Blog = mongoose.models.Blogs || mongoose.model('Blogs', blogSchema);
-
-
+const Blog = mongoose.models.Blog || mongoose.model<IBlog>('Blog', blogSchema);
 export default Blog;

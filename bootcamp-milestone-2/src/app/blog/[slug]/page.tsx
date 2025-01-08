@@ -1,6 +1,6 @@
 import React from "react";
 import connectDB from "../../database/db";
-import Blog from "../../database/blogSchema";
+import Blog, { IBlog, IComment } from "../../database/blogSchema";
 import style from "./blogpage.module.css";
 import Comment from "../../components/Comment";
 
@@ -8,11 +8,11 @@ type Props = {
   params: { slug: string };
 };
 
-async function getBlog(slug: string): Promise<Blog | null> {
+async function getBlog(slug: string): Promise<IBlog | null> {
   await connectDB();
 
   try {
-    const blog = await Blog.findOne({ slug }).lean<Blog>();
+    const blog = await Blog.findOne({ slug }).lean<IBlog>();
     return blog;
   } catch (err) {
     console.error(`Error fetching blog: ${err}`);
@@ -38,7 +38,6 @@ export default async function BlogPage({ params: { slug } }: Props) {
       <p className={style.blogDate}>{new Date(blog.date).toLocaleDateString()}</p>
       <img
         src={blog.image}
-        alt={blog.image_alt || blog.title}
         className={style.blogImage}
       />
       <div className={style.blogContent}>
@@ -52,7 +51,7 @@ export default async function BlogPage({ params: { slug } }: Props) {
           <p className={style.noComments}>No comments yet. Be the first to comment!</p>
         ) : (
           <ul className={style.commentList}>
-            {blog.comments.map((comment, index) => (
+            {(blog.comments as IComment[]).map((comment, index) => (
               <li key={index} className={style.comment}>
                 <Comment comment={comment} />
               </li>
