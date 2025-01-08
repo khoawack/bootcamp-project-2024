@@ -1,7 +1,7 @@
 import React from "react";
 import connectDB from "@/app/database/db";
 import Blog from "@/app/database/blogSchema";
-import style from "./blogpage.module.css";
+import style from "./blog.module.css";
 import Comment from "@/app/components/Comment";
 import { IBlog } from "@/app/database/blogSchema";
 
