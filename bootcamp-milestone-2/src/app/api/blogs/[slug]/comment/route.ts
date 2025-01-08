@@ -4,11 +4,11 @@ import Blog from "../../../../database/blogSchema";
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: Record<string, string> } // Use Record<string, string> for dynamic params
+  { params }: { params: Record<string, string> } // Correct typing for dynamic params
 ) {
   await connectDB();
 
-  const { slug } = params;
+  const { slug } = params; // Extract the slug from the params
 
   try {
     const body = await req.json();
