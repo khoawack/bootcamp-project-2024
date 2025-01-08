@@ -22,7 +22,7 @@ async function getBlog(slug: string): Promise<IBlog | null> {
   }
 }
 
-export default async function BlogPage({ params }: Awaited<PageProps>) {
+export default async function BlogPage({ params }: PageProps) {
   const { slug } = params;
 
   const blog = await getBlog(slug);
