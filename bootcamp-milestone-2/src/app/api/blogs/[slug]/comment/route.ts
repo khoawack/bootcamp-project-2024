@@ -2,10 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 import connectDB from "../../../../database/db";
 import Blog from "../../../../database/blogSchema";
 
-export async function POST(req: NextRequest, context: { params: { slug: string } }) {
+
+
+export async function POST(req: NextRequest, { params }: { params: { slug: string } }) {
   await connectDB();
 
-  const { slug } = context.params;
+  const { slug } = params; 
 
   try {
     const body = await req.json();
