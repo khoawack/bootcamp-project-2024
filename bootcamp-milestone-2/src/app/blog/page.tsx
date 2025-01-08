@@ -1,9 +1,8 @@
 import React from "react";
 import connectDB from "@/app/database/db";
-import Blog from "@/app/database/blogSchema";
-import style from "./blog.module.css";
+import Blog, { IBlog } from "@/app/database/blogSchema";
+import style from "./blogpage.module.css";
 import Comment from "@/app/components/Comment";
-import { IBlog } from "@/app/database/blogSchema";
 
 type PageProps = {
   params: {
@@ -22,7 +21,6 @@ async function getBlog(slug: string): Promise<IBlog | null> {
     return null;
   }
 }
-
 
 export default async function BlogPage({ params }: PageProps) {
   const blog = await getBlog(params.slug);
@@ -52,9 +50,7 @@ export default async function BlogPage({ params }: PageProps) {
       <div className={style.commentContainer}>
         <h2 className={style.commentTitle}>Comments</h2>
         {blog.comments.length === 0 ? (
-          <p className={style.noComments}>
-            No comments yet. Be the first to comment!
-          </p>
+          <p className={style.noComments}>No comments yet. Be the first to comment!</p>
         ) : (
           <ul className={style.commentList}>
             {blog.comments.map((comment, index) => (
