@@ -1,23 +1,31 @@
 import { NextRequest, NextResponse } from "next/server";
-import connectDB from "../../../../database/db";
-import Blog from "../../../../database/blogSchema";
+import connectDB from "@/app/database/db";
+import Blog from "@/app/database/blogSchema";
 
+// POST handler for adding comments to a specific blog
 export async function POST(
   req: NextRequest,
-  { params }: { params: Record<string, string> } // Correct typing for dynamic params
-) {
+  context: { params: { slug: string } } // Correct type for dynamic route context
+): Promise<NextResponse> {
   await connectDB();
 
-  const { slug } = params; // Extract the slug from the params
+  // Extract the slug from the context
+  const { slug } = context.params;
 
   try {
+    // Parse the request body
     const body = await req.json();
     const { user = "anonymous", comment } = body;
 
+    // Validate the input
     if (!comment || comment.trim() === "") {
-      return NextResponse.json({ error: "Comment cannot be empty." }, { status: 400 });
+      return NextResponse.json(
+        { error: "Comment cannot be empty." },
+        { status: 400 }
+      );
     }
 
+    // Find the blog by slug and add the comment
     const updatedBlog = await Blog.findOneAndUpdate(
       { slug },
       { $push: { comments: { user, comment, date: new Date() } } },
@@ -25,9 +33,13 @@ export async function POST(
     );
 
     if (!updatedBlog) {
-      return NextResponse.json({ error: "Blog not found." }, { status: 404 });
+      return NextResponse.json(
+        { error: "Blog not found." },
+        { status: 404 }
+      );
     }
 
+    // Return a success response
     return NextResponse.json({
       message: "Comment added successfully!",
       comment: { user, comment, date: new Date() },
