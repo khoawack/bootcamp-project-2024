@@ -2,12 +2,15 @@ import { NextRequest, NextResponse } from "next/server";
 import connectDB from "../../../../database/db";
 import Blog from "../../../../database/blogSchema";
 
-export async function POST(
-  req: NextRequest,
-  context: { params: { slug: string } }) {
+interface Context {
+  params: { slug: string };
+}
+
+export async function POST(req: NextRequest, { params }: Context) {
   await connectDB();
 
-  const { slug } = context.params; 
+  const { slug } = params;
+
   try {
     const body = await req.json();
     const { user = "anonymous", comment } = body;
@@ -26,9 +29,15 @@ export async function POST(
       return NextResponse.json({ error: "Blog not found." }, { status: 404 });
     }
 
-    return NextResponse.json({ message: "Comment added successfully!", comment: { user, comment, date: new Date() } });
+    return NextResponse.json({
+      message: "Comment added successfully!",
+      comment: { user, comment, date: new Date() },
+    });
   } catch (error) {
     console.error("Error adding comment:", error);
-    return NextResponse.json({ error: "Failed to add comment." }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to add comment." },
+      { status: 500 }
+    );
   }
 }
