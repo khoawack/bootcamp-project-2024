@@ -1,26 +1,51 @@
+import Link from "next/link";
 import React from 'react';
 import style from './portfolio.module.css';
+import connectDB from "../database/db";
+import Project from "../database/portfolioSchema";
 
+async function fetchProject() {
+  await connectDB(); 
 
-const PortfolioPage: React.FC = () => {
+  try {
+    console.log("Fetching from DB...");
+
+    const project = await Project.find().sort({ date: -1 }).lean();
+    return project;
+  } catch (err) {
+    console.error("Error fetching project:", err);
+    return [];
+  }
+}
+
+const PortfolioPage = async () => {
+  const project = await fetchProject(); 
     return (
       <>
         <main className={style.main}>
           <h1 className={style.pageTitle}>Portfolio</h1>
-          <div className={style.project}>
-            <img
-              src="https://wpvip.edutopia.org/wp-content/uploads/2022/10/robinson-169hero-portfolio-shutterstock.jpg?w=2880&quality=85"
-              className={style.projectImage}
-              alt="image of cal poly"
-            />
-            <div className={style.projectDetails}>
-              <h1 className={style.projectName}>Personal Website</h1>
-              <p className={style.projectDescription}>
-                Made a personal website following Hack4Impact starter pack.
-              </p>
-              <a href="/" className={style.projectLink}>Learn More</a>
+
+          {project.length === 0 ? (
+            <p>No projects found</p>
+          ) : (
+            project.map((project: any) => (
+              <div key={project._id} className={style.project}>
+              <img
+                src={project.image}
+                className={style.projectImage}
+              />
+              <div className={style.projectDetails}>
+                <h1 className={style.projectName}>{project.title}</h1>
+                <p className={style.projectDescription}>
+                  {project.description}
+                </p>
+                <Link href={project.link}>
+                    <h1>Learn More</h1>
+                </Link>
+              </div>
             </div>
-          </div>
+            ))
+          )}
         </main>
   
         <footer className={style.footer}>
