@@ -1,45 +1,70 @@
-import Link from "next/link";
 import React from "react";
-import style from "./blog.module.css";
-import connectDB from "../database/db";
-import Blog from "../database/blogSchema";
+import connectDB from "@/app/database/db";
+import Blog from "@/app/database/blogSchema";
+import style from "./blogpage.module.css";
+import Comment from "@/app/components/Comment";
+import { IBlog } from "@/app/database/blogSchema";
 
-async function fetchBlogs() {
-  await connectDB(); 
+type PageProps = {
+  params: {
+    slug: string;
+  };
+};
+
+async function getBlog(slug: string): Promise<IBlog | null> {
+  await connectDB();
 
   try {
-    const blogs = await Blog.find().sort({ date: -1 }).lean();
-    return blogs;
+    const blog = await Blog.findOne({ slug }).lean<IBlog>();
+    return blog;
   } catch (err) {
-    console.error("Error fetching blogs:", err);
-    return [];
+    console.error(`Error fetching blog: ${err}`);
+    return null;
   }
 }
 
-const BlogPage = async () => {
-  const blogs = await fetchBlogs(); 
+
+export default async function BlogPage({ params }: PageProps) {
+  const blog = await getBlog(params.slug);
+
+  if (!blog) {
+    return (
+      <div className={style.notFound}>
+        <h1>Blog not found</h1>
+        <p>We couldn’t find a blog post with the slug "{params.slug}".</p>
+      </div>
+    );
+  }
 
   return (
-    <div id="blog-container" className={style.blogContainer}>
-      {blogs.length === 0 ? (
-        <p>No blogs found.</p>
-      ) : (
-        blogs.map((blog: any) => (
-          <div key={blog._id} className={style.blog}>
-            <Link href={`/blog/${blog.slug}`}>
-              <h1>{blog.title}</h1>
-            </Link>
-            <img
-              src={blog.image}
-              alt={blog.imageAlt}
-              className={style.blogImage}
-            />
-            <p>{blog.description}</p>
-          </div>
-        ))
-      )}
+    <div className={style.blogContainer}>
+      <h1 className={style.blogTitle}>{blog.title}</h1>
+      <p className={style.blogDate}>{new Date(blog.date).toLocaleDateString()}</p>
+      <img
+        src={blog.image}
+        alt={blog.title}
+        className={style.blogImage}
+      />
+      <div className={style.blogContent}>
+        <p>{blog.content}</p>
+      </div>
+
+      <div className={style.commentContainer}>
+        <h2 className={style.commentTitle}>Comments</h2>
+        {blog.comments.length === 0 ? (
+          <p className={style.noComments}>
+            No comments yet. Be the first to comment!
+          </p>
+        ) : (
+          <ul className={style.commentList}>
+            {blog.comments.map((comment, index) => (
+              <li key={index} className={style.comment}>
+                <Comment comment={comment} />
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   );
-};
-
-export default BlogPage;
+}
